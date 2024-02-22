@@ -3,6 +3,7 @@ using WalletApp.DataAccess;
 using WalletApp.DataAccess.Enums;
 using System;
 using System.Runtime.Intrinsics.X86;
+using System.Drawing;
 
 namespace WalletApp.WebApi.DbInitializer
 {
@@ -53,15 +54,41 @@ namespace WalletApp.WebApi.DbInitializer
                 var transaction = new Transaction
                 {
                     TransactionId = Guid.NewGuid(),
-                    TransactionName = $"Transaction{i + 1} for {user.UserName}",
-                    TransactionType = (TransactionTypeEnum)new Random().Next(1, 3),
+                    TransactionName = $"Transaction{i + 1}",
+                    TransactionType = (TransactionTypeEnum)new Random().Next(0, 2),
                     IsPending = false,
                     Date = DateTime.UtcNow.AddDays(-i),
                     AuthorizedUserName = user.UserName,
+                    IconData = IconToBytes(),
                     UserId = user.Id
                 };
 
                 _context.Transactions.Add(transaction);
+            }
+        }
+
+        static Image CreateImage()
+        {
+            int imageSize = 64;
+
+            using (Bitmap bitmap = new Bitmap(imageSize, imageSize))
+            {
+                using (Graphics graphics = Graphics.FromImage(bitmap))
+                {
+                    graphics.Clear(Color.DarkSlateGray); 
+                }
+
+                return (Image)bitmap.Clone();
+            }
+        }
+
+        private byte[] IconToBytes()
+        {
+            var icon = CreateImage();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                icon.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                return ms.ToArray();
             }
         }
     }

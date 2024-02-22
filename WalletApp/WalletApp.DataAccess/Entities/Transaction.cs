@@ -16,6 +16,7 @@ namespace WalletApp.DataAccess.Entities
         public bool IsPending { get; set; }
         public DateTime Date { get; set; }
         public string ?AuthorizedUserName { get; set; }
+        public byte[] IconData { get; set; }
 
         public Guid UserId { get; set; }
         public User User { get; set; }
