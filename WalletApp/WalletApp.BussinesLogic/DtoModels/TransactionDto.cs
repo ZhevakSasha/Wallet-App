@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WalletApp.DataAccess.Entities;
+using WalletApp.DataAccess.Enums;
 
-namespace WalletApp.BussinesLogic.Dto_s
+namespace WalletApp.BussinesLogic.DtoModels
 {
-    internal class TransactionDto
+    public class TransactionDto
     {
+        public Guid TransactionId { get; set; }
+        public string TransactionName { get; set; }
+        public TransactionTypeEnum TransactionType { get; set; }
+        public string ?AuthorizedUserName { get; set; }
+        public bool IsPending { get; set; }
+        public DateTime Date { get; set; }
     }
 }

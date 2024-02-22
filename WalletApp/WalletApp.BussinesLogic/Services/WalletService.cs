@@ -24,50 +24,15 @@ namespace WalletApp.BussinesLogic.Services
             return cardBalance;
         }
 
-        public string GetCurrentMonth()
+        public string GetDailyPoints(int dayOfSeason)
         {
-            return DateTime.Now.ToString("MMMM");
-        }
-
-        public string GetDailyPoints()
-        {
-            var date = DateTime.Now;
-
-            var seasonStarts = new DateTime[] {
-            new DateTime(date.Year, 3, 1),
-            new DateTime(date.Year, 6, 1),
-            new DateTime(date.Year, 9, 1),
-            new DateTime(date.Year, 12, 1)
-            };
-
-            int seasonIndex = 0;
-
-            while (seasonIndex < seasonStarts.Length - 1 && date >= seasonStarts[seasonIndex + 1])
-            {
-                seasonIndex++;
-            }
-
-            if (date < seasonStarts[0])
-            {
-                seasonIndex = seasonStarts.Length - 1;
-            }
-
-            var totalDays = date - seasonStarts[seasonIndex];
-
-            var  daysInSeason = 0;
-
-            if (date.Month == 1 || date.Month == 2)
-                daysInSeason = totalDays.Days + (DateTime.IsLeapYear(date.Year) ? 366 : 365);
-            else
-                daysInSeason = totalDays.Days + 1;
-
-            if(daysInSeason == 1 || daysInSeason == 2)
-                return daysInSeason.ToString();
+            if (dayOfSeason == 1 || dayOfSeason == 2)
+                return dayOfSeason.ToString();
 
             var points = 3.0;
             var previousDayPoints = 2.0;
 
-            for (int i = 2; i < daysInSeason; i++)
+            for (int i = 2; i < dayOfSeason; i++)
             {
                 var pointsBeforePreviousDayPoints = points;
                 points = previousDayPoints + (0.6 * points);
