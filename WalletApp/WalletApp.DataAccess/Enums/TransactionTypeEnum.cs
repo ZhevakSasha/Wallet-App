@@ -8,7 +8,7 @@ namespace WalletApp.DataAccess.Enums
 {
     public enum TransactionTypeEnum
     {
-        Payment,
-        Credit
+        Payment = 1,
+        Credit = 2
     }
 }

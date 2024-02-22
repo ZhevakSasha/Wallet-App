@@ -25,5 +25,10 @@ namespace WalletApp.DataAccess.Repository
 
             return user;
         }
+
+        public Task<bool> DoesUserExistAsync(Guid userId)
+        {
+            return _dbContext.Users.AnyAsync(u => u.Id == userId);
+        }
     }
 }

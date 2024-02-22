@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WalletApp.BussinesLogic.Services;
+using WalletApp.BussinesLogic.Services.Interfaces;
 using WalletApp.DataAccess;
 using WalletApp.DataAccess.Repository;
 using WalletApp.WebApi.DbInitializer;

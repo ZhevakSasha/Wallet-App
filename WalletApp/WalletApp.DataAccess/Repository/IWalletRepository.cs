@@ -11,5 +11,6 @@ namespace WalletApp.DataAccess.Repository
     {
         Task<decimal> GetCardBalanceAsync(Guid userId);
         Task<IList<Transaction>> GetLatestTransactionsAsync(Guid userId);
+        Task<Transaction> GetTransactionByIdAsync(Guid id);
     }
 }

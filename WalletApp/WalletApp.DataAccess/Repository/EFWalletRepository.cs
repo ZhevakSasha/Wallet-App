@@ -36,5 +36,14 @@ namespace WalletApp.DataAccess.Repository
 
             return transactions;
         }
+
+        public async Task<Transaction> GetTransactionByIdAsync(Guid id)
+        {
+            var transaction = await _dbContext.Transactions
+                .Where(u => u.TransactionId == id)
+                .FirstOrDefaultAsync();
+
+            return transaction;
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WalletApp.BussinesLogic.Services.Interfaces;
 
 namespace WalletApp.BussinesLogic.Services
 {
@@ -12,18 +13,18 @@ namespace WalletApp.BussinesLogic.Services
         public string GetCurrentMonth()
         {
             DateTimeFormatInfo dtfi = new CultureInfo("en-US").DateTimeFormat;
-            return DateTime.Now.ToString("MMMM", dtfi);
+            return DateTime.UtcNow.ToString("MMMM", dtfi);
         }
 
         public int GetCurrentSeasonDay()
         {
-            var date = DateTime.Now;
+            var date = DateTime.UtcNow;
 
             var seasonStarts = new DateTime[] {
-            new DateTime(date.Year, 3, 1),
-            new DateTime(date.Year, 6, 1),
-            new DateTime(date.Year, 9, 1),
-            new DateTime(date.Year, 12, 1)
+                new (date.Year, 3, 1),
+                new (date.Year, 6, 1),
+                new (date.Year, 9, 1),
+                new (date.Year, 12, 1)
             };
 
             int seasonIndex = 0;

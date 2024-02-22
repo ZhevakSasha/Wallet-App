@@ -12,10 +12,12 @@ namespace WalletApp.BussinesLogic.DtoModels
     {
         public Guid TransactionId { get; set; }
         public string TransactionName { get; set; }
+        public string TransactionText { get; set; }
+        public string Amount { get; set; }
         public string TransactionType { get; set; }
         public string ?AuthorizedUserName { get; set; }
         public bool IsPending { get; set; }
         public byte[] IconData { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }

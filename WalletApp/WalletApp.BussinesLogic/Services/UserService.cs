@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WalletApp.BussinesLogic.Services.Interfaces;
 using WalletApp.DataAccess.Repository;
 
 namespace WalletApp.BussinesLogic.Services
@@ -18,9 +19,7 @@ namespace WalletApp.BussinesLogic.Services
 
         public async Task<bool> DoesUserExistAsync(Guid id)
         {
-            var user = await _userRepository.GetUserByUserIdAsync(id);
-
-            return user != null;
+            return await _userRepository.DoesUserExistAsync(id);
         }
     }
 }

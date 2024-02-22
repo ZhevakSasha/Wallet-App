@@ -10,5 +10,6 @@ namespace WalletApp.DataAccess.Repository
     public interface IUserRepository
     {
         Task<User> GetUserByUserIdAsync(Guid userId);
+        Task<bool> DoesUserExistAsync(Guid userId);
     }
 }

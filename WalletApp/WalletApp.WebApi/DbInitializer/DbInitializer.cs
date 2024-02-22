@@ -55,10 +55,12 @@ namespace WalletApp.WebApi.DbInitializer
                 {
                     TransactionId = Guid.NewGuid(),
                     TransactionName = $"Transaction{i + 1}",
-                    TransactionType = (TransactionTypeEnum)new Random().Next(0, 2),
+                    TransactionText = $"Transaction text{i + 1}",
+                    TransactionType = (TransactionTypeEnum)new Random().Next(1, 3),
                     IsPending = false,
                     Date = DateTime.UtcNow.AddDays(-i),
                     AuthorizedUserName = user.UserName,
+                    Amount = new Random().Next(0, 1501),
                     IconData = IconToBytes(),
                     UserId = user.Id
                 };

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
 using WalletApp.BussinesLogic.DtoModels;
-using WalletApp.BussinesLogic.Services;
+using WalletApp.BussinesLogic.Services.Interfaces;
 
 namespace WalletApp.WebApi.Controllers
 {
@@ -21,7 +21,7 @@ namespace WalletApp.WebApi.Controllers
             _userService = userService;
         }
 
-        [HttpGet("latest-transactions")]
+        [HttpGet("get-latest-transactions")]
         public async Task<ActionResult<IList<TransactionDto>>> GetLatestTransactionsAsync(Guid userId)
         {
             var userExists = await _userService.DoesUserExistAsync(userId);
@@ -41,7 +41,21 @@ namespace WalletApp.WebApi.Controllers
             return Ok(transactions);
         }
 
-        [HttpGet("payment-due")]
+        [HttpGet("get-transaction")]
+        public async Task<ActionResult<TransactionDto>> GetTransactionByIdAsync(Guid id)
+        {
+
+            var transaction = await _walletService.GetTransactionByIdAsync(id);
+
+            if (transaction == null)
+            {
+                return NotFound($"Transaction not found");
+            }
+
+            return Ok(transaction);
+        }
+
+        [HttpGet("get-payment-due")]
         public string PaymentDue()
         {
             var currentMonth = _dateInfoService.GetCurrentMonth();
@@ -50,14 +64,14 @@ namespace WalletApp.WebApi.Controllers
             return massage;
         }
 
-        [HttpGet("daily-points")]
+        [HttpGet("get-daily-points")]
         public string GetDailyPoints()
         {
             var currentDayOfSeason = _dateInfoService.GetCurrentSeasonDay();
             return _walletService.GetDailyPoints(currentDayOfSeason);
         }
 
-        [HttpGet("card-balance")]
+        [HttpGet("get-card-balance")]
         public async Task<ActionResult<UserBalanceDto>> GetCardBalanceAsync(Guid userId)
         {
             var userExists = await _userService.DoesUserExistAsync(userId);
