@@ -15,6 +15,7 @@ namespace WalletApp.DataAccess.Entities
         public TransactionTypeEnum TransactionType { get; set; }
         public bool IsPending { get; set; }
         public DateTime Date { get; set; }
+        public string ?AuthorizedUserName { get; set; }
 
         public Guid UserId { get; set; }
         public User User { get; set; }
