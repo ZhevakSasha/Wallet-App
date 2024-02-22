@@ -10,8 +10,8 @@ namespace WalletApp.BussinesLogic.Services
 {
     public interface IWalletService
     {
-        Task<decimal> GetCardBalance(Guid userId);
-        Task<IList<TransactionDto>> GetLatestTransactions(Guid userId);
+        Task<UserBalanceDto> GetCardBalanceAsync(Guid userId);
+        Task<IList<TransactionDto>> GetLatestTransactionsAsync(Guid userId);
         string GetDailyPoints(int dayOfSeason);
     }
 }

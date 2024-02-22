@@ -7,9 +7,8 @@ using WalletApp.DataAccess.Entities;
 
 namespace WalletApp.DataAccess.Repository
 {
-    public interface IWalletRepository
+    public interface IUserRepository
     {
-        Task<decimal> GetCardBalanceAsync(Guid userId);
-        Task<IList<Transaction>> GetLatestTransactionsAsync(Guid userId);
+        Task<User> GetUserByUserIdAsync(Guid userId);
     }
 }

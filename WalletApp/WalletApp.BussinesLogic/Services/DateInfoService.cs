@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ namespace WalletApp.BussinesLogic.Services
     {
         public string GetCurrentMonth()
         {
-            return DateTime.Now.ToString("MMMM");
+            DateTimeFormatInfo dtfi = new CultureInfo("en-US").DateTimeFormat;
+            return DateTime.Now.ToString("MMMM", dtfi);
         }
 
         public int GetCurrentSeasonDay()

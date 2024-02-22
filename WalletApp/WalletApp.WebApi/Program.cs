@@ -18,6 +18,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<IWalletRepository,EFWalletRepository>();
 builder.Services.AddScoped<IDateInfoService, DateInfoService>();
+builder.Services.AddScoped<IUserRepository, EFUserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 

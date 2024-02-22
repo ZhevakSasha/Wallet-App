@@ -16,7 +16,7 @@ namespace WalletApp.DataAccess.Repository
         {
             _dbContext = dbContext;
         }
-        public async Task<decimal> GetCardBalance(Guid userId)
+        public async Task<decimal> GetCardBalanceAsync(Guid userId)
         {
             var cardBalance = await _dbContext.Users
                 .Where(u => u.Id == userId)
@@ -26,7 +26,7 @@ namespace WalletApp.DataAccess.Repository
             return cardBalance;
         }
 
-        public async Task<IList<Transaction>> GetLatestTransactions(Guid userId)
+        public async Task<IList<Transaction>> GetLatestTransactionsAsync(Guid userId)
         {
             var transactions = await _dbContext.Transactions
                 .Where(t => t.UserId == userId)

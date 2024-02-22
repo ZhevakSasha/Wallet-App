@@ -12,23 +12,42 @@ namespace WalletApp.WebApi.Controllers
     {
         private readonly IWalletService _walletService;
         private readonly IDateInfoService _dateInfoService;
+        private readonly IUserService _userService;
 
-        public WalletController(IWalletService walletService, IDateInfoService dateInfoService)
+        public WalletController(IWalletService walletService, IDateInfoService dateInfoService, IUserService userService)
         {
             _walletService = walletService;
             _dateInfoService = dateInfoService;
+            _userService = userService;
         }
 
         [HttpGet("latest-transactions")]
-        public async Task<IList<TransactionDto>> GetLatestTransactions(Guid userId)
-        { 
-            return await _walletService.GetLatestTransactions(userId);
+        public async Task<ActionResult<IList<TransactionDto>>> GetLatestTransactionsAsync(Guid userId)
+        {
+            var userExists = await _userService.DoesUserExistAsync(userId);
+
+            if (!userExists)
+            {
+                return NotFound($"User with ID {userId} not found");
+            }
+
+            var transactions = await _walletService.GetLatestTransactionsAsync(userId);
+
+            if (transactions == null)
+            {
+                return NotFound($"Transactions for user {userId} not found");
+            }
+
+            return Ok(transactions);
         }
 
-        [HttpGet("current-month")]
-        public string GetCurrentMonth()
+        [HttpGet("payment-due")]
+        public string PaymentDue()
         {
-            return _dateInfoService.GetCurrentMonth();
+            var currentMonth = _dateInfoService.GetCurrentMonth();
+            var massage = $"You’ve paid your {currentMonth} balance.";
+
+            return massage;
         }
 
         [HttpGet("daily-points")]
@@ -39,9 +58,18 @@ namespace WalletApp.WebApi.Controllers
         }
 
         [HttpGet("card-balance")]
-        public async Task<decimal> GetCardBalance(Guid userId)
+        public async Task<ActionResult<UserBalanceDto>> GetCardBalanceAsync(Guid userId)
         {
-            return await _walletService.GetCardBalance(userId);
+            var userExists = await _userService.DoesUserExistAsync(userId);
+
+            if (!userExists)
+            {
+                return NotFound($"User with ID {userId} not found");
+            }
+
+            var userBalanceDto = await _walletService.GetCardBalanceAsync(userId);
+
+            return Ok(userBalanceDto);
         }
     }
 }

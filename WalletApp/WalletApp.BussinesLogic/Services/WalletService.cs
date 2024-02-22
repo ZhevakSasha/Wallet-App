@@ -17,11 +17,12 @@ namespace WalletApp.BussinesLogic.Services
             _walletRepository = walletRepository;
         }
 
-        public async Task<decimal> GetCardBalance(Guid userId)
+        public async Task<UserBalanceDto> GetCardBalanceAsync(Guid userId)
         {
-            var cardBalance = await _walletRepository.GetCardBalance(userId);
+            var cardBalance = await _walletRepository.GetCardBalanceAsync(userId);
+            var userBalanceDto = new UserBalanceDto(cardBalance);
 
-            return cardBalance;
+            return userBalanceDto;
         }
 
         public string GetDailyPoints(int dayOfSeason)
@@ -45,16 +46,17 @@ namespace WalletApp.BussinesLogic.Services
             return Math.Round(points).ToString();
         }
 
-        public async Task<IList<TransactionDto>> GetLatestTransactions(Guid userId)
+        public async Task<IList<TransactionDto>> GetLatestTransactionsAsync(Guid userId)
         {
-            var transactions =  await _walletRepository.GetLatestTransactions(userId);
+            var transactions =  await _walletRepository.GetLatestTransactionsAsync(userId);
 
             var transactionDtos = transactions.Select(t => new TransactionDto
             {
                 TransactionId = t.TransactionId,
                 TransactionName = t.TransactionName,
-                TransactionType = t.TransactionType,
+                TransactionType = t.TransactionType.ToString(),
                 IsPending = t.IsPending,
+                IconData = t.IconData,
                 Date = t.Date,
             }).ToList();
 
